@@ -4,6 +4,7 @@
 name: win-portable
 
 on:
+  workflow_dispatch:
   push:
     branches: [ build, test, build-only, win-portable ]
 
