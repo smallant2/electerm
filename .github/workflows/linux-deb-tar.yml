@@ -4,13 +4,14 @@
 name: linux-deb-tar
 
 on:
+  workflow_dispatch:
   push:
     branches: [ build, test, build-only, linux-deb-tar ]
 
 jobs:
   build:
 
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-20.04
     environment: build
     if: ${{ !contains(github.event.head_commit.message, '[skip build]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[skip linux]') && !contains(github.event.head_commit.message, '[skip linux1]') }}
 
@@ -54,4 +55,16 @@ jobs:
         CF_R2_SECRET_ACCESS_KEY: ${{ secrets.CF_R2_SECRET_ACCESS_KEY }}
 
       run: node build/bin/build-linux-deb-tar
+
+    - name: Upload Linux build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: electerm-linux-build
+        path: |
+          dist/*.tar.gz
+          dist/*.deb
+          dist/*.AppImage
+          dist/*.rpm
+          dist/*.snap
+        if-no-files-found: warn
 
