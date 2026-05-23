@@ -60,11 +60,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: electerm-linux-build
-        path: |
-          dist/*.tar.gz
-          dist/*.deb
-          dist/*.AppImage
-          dist/*.rpm
-          dist/*.snap
+        path: release-artifacts/*
         if-no-files-found: warn
 
